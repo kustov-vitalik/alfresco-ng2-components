@@ -2,75 +2,67 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+build() {
+    npm install --cache-min=Infinity
+    # npm run build
+    rm -rf dist
+    npm run tsc
+    npm run copy-dist
+    npm link
+}
+
 #LINK CORE
 echo "====== linking component: ng2-alfresco-core ====="
 cd "$DIR/../ng2-components/ng2-alfresco-core"
-npm link
-npm run build
+build
 
 #LINK FORM
 echo "====== linking component: ng2-activiti-form ====="
 cd "$DIR/../ng2-components/ng2-activiti-form"
 npm link ng2-alfresco-core
-npm link
-npm run build
+build
 
 #LINK DATATABLE
 echo "====== linking component: ng2-alfresco-datatable ====="
 cd "$DIR/../ng2-components/ng2-alfresco-datatable"
 npm link ng2-alfresco-core
-npm link
-npm run build
+build
 
 #LINK DOCUMENTLIST
 echo "====== linking component: ng2-alfresco-documentlist ====="
 cd "$DIR/../ng2-components/ng2-alfresco-documentlist"
-npm link ng2-alfresco-core
-npm link ng2-alfresco-datatable
-npm link
-npm run build
+npm link ng2-alfresco-core ng2-alfresco-datatable
+build
 
 #LINK WEBSCRIPT
 echo "====== linking component: ng2-alfresco-webscript ====="
 cd "$DIR/../ng2-components/ng2-alfresco-webscript"
-npm link ng2-alfresco-core
-npm link ng2-alfresco-datatable
-npm link
-npm run build
+npm link ng2-alfresco-core ng2-alfresco-datatable
+build
 
 #LINK TASKLIST
 echo "====== linking component: ng2-activiti-tasklist ====="
 cd "$DIR/../ng2-components/ng2-activiti-tasklist"
-npm link ng2-alfresco-core
-npm link ng2-alfresco-datatable
-npm link ng2-activiti-form
-npm link
-npm run build
+npm link ng2-alfresco-core ng2-alfresco-datatable ng2-activiti-form
+build
 
 #LINK PROCESSLIST
 echo "====== linking component: ng2-activiti-processlist ====="
 cd "$DIR/../ng2-components/ng2-activiti-processlist"
-npm link ng2-alfresco-core
-npm link ng2-alfresco-datatable
-npm link ng2-activiti-form
-npm link ng2-activiti-tasklist
-npm link
-npm run build
+npm link ng2-alfresco-core ng2-alfresco-datatable ng2-activiti-form ng2-activiti-tasklist
+build
 
 #LINK DIAGRAMS
 echo "====== linking component: ng2-activiti-diagrams ====="
 cd "$DIR/../ng2-components/ng2-activiti-diagrams"
 npm link ng2-alfresco-core
-npm link
-npm run build
+build
 
 #LINK ANALYTICS
 echo "====== linking component: ng2-activiti-analytics ====="
 cd "$DIR/../ng2-components/ng2-activiti-analytics"
-npm link ng2-alfresco-core
-npm link ng2-activiti-diagrams
-npm link
-npm run build
+npm link ng2-alfresco-core ng2-activiti-diagrams
+build
 
 #LINK ALL THE OTHERS COMPONENTS
 for PACKAGE in \
@@ -85,8 +77,7 @@ do
   echo "====== linking component: ${PACKAGE} ====="
   cd "$DESTDIR"
   npm link ng2-alfresco-core
-  npm link
-  npm run build
+  build
 done
 
 
@@ -113,5 +104,4 @@ do
   echo "====== demo shell linking: ${PACKAGE} ====="
   npm link ${PACKAGE}
 done
-
-npm install
+npm install --cache-min=Infinity
