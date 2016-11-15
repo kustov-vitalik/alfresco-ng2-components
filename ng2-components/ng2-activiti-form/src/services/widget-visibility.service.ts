@@ -123,7 +123,7 @@ export class WidgetVisibilityService {
         form.json.fields.forEach(columns => {
                 for (let i in columns.fields) {
                     if (columns.fields.hasOwnProperty(i)) {
-                        let field = columns.fields[i].find(field => field.id === name);
+                        let field: any = columns.fields[i].find(field => field.id === name);
                         if (field) {
                             fieldValue = field.value;
                         }
